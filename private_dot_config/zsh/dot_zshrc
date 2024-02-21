@@ -1,0 +1,50 @@
+
+export ZSH=$HOME/.oh-my-zsh
+export ZSH_CUSTOM="$HOME/.config/zsh/oh-my-zsh"
+
+ZSH_THEME="midgard"
+ZSH_COLORIZE_STYLE="native"
+
+HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Don't include date in history records
+# see 'man strftime' for details.
+HIST_STAMPS="%H:%M"
+
+# Standard plugins can be found in $ZSH/plugins/*
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# tag::plugins[]
+plugins=(
+    aliases # acs for aliases overview
+    dotenv # source .env files in directories
+
+    jsontools
+    colorize # <.>
+    dircycle # <.>
+    z # <.>
+    npm
+    urltools # <.>
+)
+: 'end::plugins[]
+ tag::plugins-notes[]
+<.> Adds syntax colouring and output via `ccat` and `cless`.
+<.> Adds `z _abc_` to switch to a previously used directory using a couple of characters of its name.
+<.> Lets you cycle through recent directories with kbd:[ctrl+shift+left]/kbd:[right]
+<.> Adds `urlencode` and `urldecode` commands.
+' # end::plugins-notes[]
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+DISABLE_AUTO_UPDATE=true
+DISABLE_UPDATE_PROMPT=true
+export HISTFILE=/dc/shellhistory/.zsh_history
+export PROMPT_COMMAND='history -a'
+sudo chown -R node /dc/shellhistory
