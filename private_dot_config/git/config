@@ -1,0 +1,50 @@
+[user]
+	name = Rolf Kleef
+	email = rolf@drostan.org
+
+[color]
+	ui = true
+
+[alias]
+	s = status
+	d = diff
+	co = checkout
+	ci = commit
+	cm = commit -m
+	l = log --stat -3
+	k = kraken
+	cl = commitlint
+	rel = standard-version
+
+[core]
+	excludesfile = ~/.config/git/ignore
+	attributesfile = ~/.config/git/attributes
+	pager = less -FX
+
+[pager]
+	log = more
+
+[gui]
+	editor = nano
+
+[push]
+	default = simple
+	followTags = true
+
+[pull]
+  rebase = false
+
+[merge]
+	summary = true
+
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+
+[init]
+	defaultBranch = main
+
+# [credential]
+# 	helper = "!f() { /root/.vscode-server-insiders/bin/8fa84589eef3538dbc763ff98dc7d5a8a0c56374-insider/node /tmp/vscode-remote-containers-ed3f046f-a322-49ca-8f74-f2bfb8c21a5c.js git-credential-helper $*; }; f"
