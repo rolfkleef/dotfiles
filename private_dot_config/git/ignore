@@ -1,4 +1,5 @@
 .env
+.vscode/
 tmp/
 nohup.out
 
