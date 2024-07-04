@@ -55,7 +55,7 @@ prompt_git() {
     zstyle ':vcs_info:*' unstagedstr '*'
     zstyle ':vcs_info:*' max-exports 3
     zstyle ':vcs_info:*' actionformats '%b' '%a%c%u' '%m'
-    zstyle ':vcs_info:*' formats '⧀ %b' '%c%u' '%m'
+    zstyle ':vcs_info:*' formats ' %b' '%c%u' '%m'
     zstyle ':vcs_info:git*+set-message:*' hooks git-untracked git-st
 
     +vi-git-untracked() {
