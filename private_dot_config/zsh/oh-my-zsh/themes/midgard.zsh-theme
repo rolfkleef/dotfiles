@@ -55,7 +55,7 @@ prompt_git() {
     zstyle ':vcs_info:*' unstagedstr '*'
     zstyle ':vcs_info:*' max-exports 3
     zstyle ':vcs_info:*' actionformats '%b' '%a%c%u' '%m'
-    zstyle ':vcs_info:*' formats ' %b' '%c%u' '%m'
+    zstyle ':vcs_info:*' formats ' %b' '%m' '%c%u'
     zstyle ':vcs_info:git*+set-message:*' hooks git-untracked git-st
 
     +vi-git-untracked() {
@@ -85,10 +85,10 @@ prompt_git() {
     vcs_info
     prompt_segment blue white "${vcs_info_msg_0_%% }${mode}"
     if [[ -n $vcs_info_msg_1_ ]]; then
-        prompt_segment magenta white $vcs_info_msg_1_
+        prompt_segment 11 black $vcs_info_msg_1_
     fi
     if [[ -n $vcs_info_msg_2_ ]]; then
-        prompt_segment 11 black $vcs_info_msg_2_
+        prompt_segment magenta white $vcs_info_msg_2_
     fi
   fi
 }
