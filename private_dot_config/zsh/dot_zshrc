@@ -45,6 +45,8 @@ source $ZSH/oh-my-zsh.sh
 
 DISABLE_AUTO_UPDATE=true
 DISABLE_UPDATE_PROMPT=true
-export HISTFILE=/dc/shellhistory/.zsh_history
+export HISTFILE=/workspace/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
 export PROMPT_COMMAND='history -a'
-sudo chown -R node /dc/shellhistory
+# sudo chown -R node /dc/shellhistory
