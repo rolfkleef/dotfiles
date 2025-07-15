@@ -8,7 +8,7 @@ set -eu
 export DEBIAN_FRONTEND=noninteractive
 apt-get update && apt-get upgrade -y
 
-# 2. Install Zsh
+# 2. Install helpers
 apt-get install -y zsh curl git
 
 # 3. Install Oh My Zsh
@@ -19,14 +19,6 @@ fi
 # 4. Set Zsh as the default shell for the container user
 chsh -s $(which zsh) "$(whoami)"
 
-# Enable and persist Zsh history
-mkdir /workspace
-touch /workspace/.zsh_history
-chmod 600 /workspace/.zsh_history
-
-# 5. Install chezmoi if not already installed
-if [ ! -x "$(command -v chezmoi)" ]; then
-  sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
-fi
-
-chezmoi init --apply --source=$PWD
+# 5. Install and init chezmoi
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+chezmoi init --apply
