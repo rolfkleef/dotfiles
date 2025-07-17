@@ -9,7 +9,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update && apt-get upgrade -y
 
 # 2. Install helpers
-apt-get install -y zsh curl git
+apt-get install -y zsh curl git nano
 
 # 3. Install Oh My Zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then

@@ -103,6 +103,12 @@ prompt_status() {
   [[ $(jobs -l | wc -l) -gt 0 ]] && prompt_segment 17 default "$(jobs -l | wc -l)"
 }
 
+prompt_virtualenv() {
+  if [[ -n "$VIRTUAL_ENV" && -n "$VIRTUAL_ENV_DISABLE_PROMPT" ]]; then
+    prompt_segment 55 white "(${VIRTUAL_ENV:t:gs/%/%%})"
+  fi
+}
+
 print_colors() {
   # Color names 0-7: black red green yellow blue magenta cyan white
 
@@ -130,6 +136,7 @@ build_prompt() {
   prompt_status
   # show the user:
   [[ "$USER" != "$DEFAULT_USER" ]] && prompt_segment 8 white "%n"
+  prompt_virtualenv
   # dir:
   prompt_segment 28 white '%~'
   prompt_git

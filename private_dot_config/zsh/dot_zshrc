@@ -7,9 +7,6 @@ ZSH_COLORIZE_STYLE="native"
 
 HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
 # Display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 
@@ -41,12 +38,12 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# In devcontainers, make .zsh_history persistent in the mounted project directory.
+if [ -d "/workspace" ]; then
+  export HISTFILE=/workspace/.zsh_history
+else
+  export HISTFILE=$HOME/.zsh_history
+fi
 
-DISABLE_AUTO_UPDATE=true
-DISABLE_UPDATE_PROMPT=true
-export HISTFILE=/workspace/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
-export PROMPT_COMMAND='history -a'
-# sudo chown -R node /dc/shellhistory

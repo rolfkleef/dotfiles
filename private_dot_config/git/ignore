@@ -1,6 +1,5 @@
 .env
 .vscode/
+.zsh_history
 tmp/
 nohup.out
-
-
