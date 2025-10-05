@@ -6,21 +6,29 @@
 
 # Add a segment: background colour, foreground colour, and text
 prompt_segment() {
-  echo -n "%{%K{$1}%}"
-  [[ -n $CURRENT_BG ]] && echo -n "%{%F{$CURRENT_BG}%}\u258c%}"
-  echo -n "%{%F{$2}%}$3"
+  local bg=$1 fg=$2 content=$3
 
-  CURRENT_BG=$1
+  if [[ -n $CURRENT_BG ]]; then
+    # Close previous background, then open new background and draw divider
+    # Previous BG color becomes the divider foreground, new BG is active after this
+    echo -n "%k%F{$CURRENT_BG}%K{$bg}▌"
+  else
+    # First segment: just start background
+    echo -n "%K{$bg}"
+  fi
+
+  echo -n "%F{$fg}${content}"
+  CURRENT_BG=$bg
 }
 
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    echo -n "%{%k%F{$CURRENT_BG}%}\u258c"
+    echo -n "%k%F{$CURRENT_BG}▌%k"
   else
-    echo -n "%{%k%}"
+    echo -n "%k"
   fi
-  echo -n "%{%f%}"
+  echo -n "%f"
   unset CURRENT_BG
 }
 
@@ -75,8 +83,8 @@ prompt_git() {
 
 	# (( $ahead || $behind )) && gitstatus+="${remote%%/*}"
         gitstatus+="${remote%%/*}"
-        (( $ahead )) && gitstatus+=( "\u2191${ahead}" )
-        (( $behind )) && gitstatus+=( "\u2193${behind}" )
+        (( $ahead )) && gitstatus+=( "↑${ahead}" )
+        (( $behind )) && gitstatus+=( "↓${behind}" )
 
         hook_com[misc]+="${gitstatus}"
       fi
@@ -115,16 +123,16 @@ print_colors() {
   # Loop through background colors
   for bg_color in {0..93}; do
     # Set background color
-    echo -n "%{%K{$bg_color}%}$bg_color:"
+    echo -n "%K{$bg_color}$bg_color:"
 
     # Loop through foreground colors
     for fg_color in {000..015}; do
       # Set foreground color and print color name
-      echo -n "%{%F{$fg_color}%} ${fg_color}"
+      echo -n "%F{$fg_color} ${fg_color}"
     done
 
     # Reset colors
-    echo "%{%k%}"
+    echo "%k"
   done
 }
 
@@ -143,4 +151,4 @@ build_prompt() {
   prompt_end
 }
 
-PROMPT='%{%f%b%k%}$(build_prompt)'
+PROMPT='%f%b%k$(build_prompt)'
