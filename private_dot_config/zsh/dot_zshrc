@@ -1,5 +1,8 @@
+if [[ -n $ZPROF ]]; then zmodload zsh/zprof; fi
+DEFAULT_USER=$(basename $HOME)
 
-export ZSH=$HOME/.oh-my-zsh
+# Path to oh-my-zsh installation and custom folder
+export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/.config/zsh/oh-my-zsh"
 
 ZSH_THEME="midgard"
@@ -19,24 +22,37 @@ HIST_STAMPS="%H:%M"
 # tag::plugins[]
 plugins=(
     aliases # acs for aliases overview
-    dotenv # source .env files in directories
+    rsync
+    direnv # rely on direnv for .env and .envrc files
 
     jsontools
     colorize # <.>
     dircycle # <.>
+    colored-man-pages
     z # <.>
     npm
     urltools # <.>
+    zsh-autosuggestions
+    zsh-syntax-highlighting # <.>
 )
 : 'end::plugins[]
  tag::plugins-notes[]
 <.> Adds syntax colouring and output via `ccat` and `cless`.
-<.> Adds `z _abc_` to switch to a previously used directory using a couple of characters of its name.
 <.> Lets you cycle through recent directories with kbd:[ctrl+shift+left]/kbd:[right]
+<.> Adds `z _abc_` to switch to a previously used directory using a couple of characters of its name.
 <.> Adds `urlencode` and `urldecode` commands.
+<.> Adds syntax highlighting while typing commands.
 ' # end::plugins-notes[]
 
 source $ZSH/oh-my-zsh.sh
+
+# New dircycle key bindings
+# VTE (Ptyxis, GNOME Terminal, Tilix) consumes ctrl+shift+arrows itself, so the
+# keys never reach the pty and the widgets can never fire:
+bindkey "^[[1;3D" insert-cycledleft    # alt+left  : previous dir on the stack
+bindkey "^[[1;3C" insert-cycledright   # alt+right : next dir on the stack
+bindkey "^[[1;3A" insert-cycledup      # alt+up    : parent dir
+bindkey "^[[1;3B" insert-cycleddown    # alt+down  : first subdir
 
 # In devcontainers, make .zsh_history persistent in the mounted project directory.
 if [ -d "/workspace" ]; then
@@ -47,3 +63,5 @@ fi
 
 export HISTSIZE=10000
 export SAVEHIST=10000
+
+if [[ -n $ZPROF ]]; then zprof; fi

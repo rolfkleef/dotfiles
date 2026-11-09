@@ -12,9 +12,6 @@
 	ci = commit
 	cm = commit -m
 	l = log --stat -3
-	k = kraken
-	cl = commitlint
-	rel = standard-version
 
 [core]
 	excludesfile = ~/.config/git/ignore
@@ -46,5 +43,6 @@
 [init]
 	defaultBranch = main
 
-# [credential]
-# 	helper = "!f() { /root/.vscode-server-insiders/bin/8fa84589eef3538dbc763ff98dc7d5a8a0c56374-insider/node /tmp/vscode-remote-containers-ed3f046f-a322-49ca-8f74-f2bfb8c21a5c.js git-credential-helper $*; }; f"
+# if on my laptop, read additional config (fails silently)
+[include]
+  path = ~/.config/git/config-midgard
