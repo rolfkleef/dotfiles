@@ -96,7 +96,7 @@ prompt_git() {
         prompt_segment 11 black $vcs_info_msg_1_
     fi
     if [[ -n $vcs_info_msg_2_ ]]; then
-        prompt_segment magenta white $vcs_info_msg_2_
+        prompt_segment 160 white $vcs_info_msg_2_
     fi
   fi
 }
@@ -151,4 +151,28 @@ build_prompt() {
   prompt_end
 }
 
-PROMPT='%f%b%k$(build_prompt)'
+### OSC 133 shell integration (semantic prompt marks)
+# Tells VTE-based terminals (Ptyxis, GNOME Terminal, Tilix) where each prompt
+# begins, which is what makes their built-in ctrl+shift+left / ctrl+shift+right
+# ("jump to previous/next prompt") land on prompts instead of running to the
+# top/bottom of the scrollback.
+#
+# VTE parses OSC 133 as ITERM2_SHELL_INTEGRATION (src/parser-osc.hh) and tags
+# every cell drawn while in mode A with ShellIntegrationMode::ePROMPT; its
+# Ring::contains_prompt_beginning() then looks for rows carrying those cells.
+# So A must be emitted before the first visible character of the prompt.
+#
+#   D;<status>  previous command finished, with its exit status
+#   A           prompt starts   (the mark VTE actually searches for)
+#   B           user input starts
+#   C           command output starts  (emitted from preexec, below)
+#
+# %{...%} tells zsh the sequences occupy zero columns, keeping its line-wrap
+# and cursor arithmetic correct. The status is taken via the %? prompt escape
+# rather than a precmd hook, because a precmd hook running any command would
+# clobber the $? that build_prompt reads for its error segment.
+autoload -Uz add-zsh-hook
+_midgard_osc133_preexec() { print -n $'\e]133;C\a' }
+add-zsh-hook preexec _midgard_osc133_preexec
+
+PROMPT=$'%{\e]133;D;%?\a\e]133;A\a%}''%f%b%k$(build_prompt)'$'%{\e]133;B\a%}'

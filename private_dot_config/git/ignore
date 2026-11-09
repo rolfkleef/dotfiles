@@ -1,5 +1,15 @@
+nohup.out
 .env
+.envrc
 .vscode/
 .zsh_history
 tmp/
-nohup.out
+.worktree/
+.claude/settings.local.json
+
+# Editor swap/backup files
+*.swp
+*.swo
+*.bak
+*.tmp
+
