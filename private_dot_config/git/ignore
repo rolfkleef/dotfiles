@@ -1,10 +1,31 @@
-nohup.out
 .env
 .vscode/
 .zsh_history
 tmp/
 .worktree/
 .claude/settings.local.json
+*.local.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.~lock.*#
+.directory
+.Trash-*
+nohup.out
 
 # Editor swap/backup files
 *.swp
