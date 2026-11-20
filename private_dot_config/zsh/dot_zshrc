@@ -23,7 +23,6 @@ HIST_STAMPS="%H:%M"
 plugins=(
     aliases # acs for aliases overview
     rsync
-    direnv # rely on direnv for .env and .envrc files
 
     jsontools
     colorize # <.>
@@ -63,5 +62,11 @@ fi
 
 export HISTSIZE=10000
 export SAVEHIST=10000
+
+export PAGER="less -FX"
+
+if [[ -r "$HOME/.config/zsh/.zshrc-midgard" ]]; then
+  source "$HOME/.config/zsh/.zshrc-midgard"
+fi
 
 if [[ -n $ZPROF ]]; then zprof; fi

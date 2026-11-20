@@ -1,0 +1,5 @@
+[tools]
+node = "latest"
+
+[settings]
+env_file = ".env"
